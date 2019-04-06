@@ -1,0 +1,53 @@
+---
+- hosts: webserver
+  remote_user: qubit 
+  become: yes
+  #  become_user: root
+  #  become_method: su
+  tasks:
+          #    - name: Install epel-release
+          #      yum: 
+          #         name: epel-release
+          #         state: present
+
+    - name: Install pip
+      yum: 
+         name: python-pip
+         state: present
+
+
+    - name: Install rsync
+      yum: 
+         name: rsync
+         state: present
+
+        
+    - name: install docker-py package
+      pip: name=docker-py
+
+
+    - name: upload the docker directory to the docker host
+      synchronize: src=docker2 dest=/tmp
+#      become: yes
+      become_method: su
+
+    - name: Build Docker image from Dockerfile
+      docker_image:
+        debug: yes
+        name: web2
+        path: /tmp/docker2
+        state: build
+        force: yes
+
+    - name: Running the container
+      docker_container:
+        debug: yes
+        image: web2:latest
+        detach: yes
+        tty: yes
+        name: web3
+        published_ports: 8084:80
+        state: started
+
+    - name: Check if container is running
+      shell: docker ps
