@@ -10,5 +10,5 @@ RUN echo 'Default page. Nginx is in your container. ' \
 #RUN sed -i -e '0,/http\ {/{/http\ {/r append_conf_nginx' -e '}' nginx.conf
 EXPOSE 80
 RUN mkdir -p /srv
-VOLUME /root/docker_project /srv
+#VOLUME /root/docker_project /srv
 CMD ["nginx", "-g", "daemon off;"]
