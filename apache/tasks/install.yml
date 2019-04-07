@@ -1,6 +1,15 @@
 ---
 # installing apache2
-- name: installing apache2 server
-apt:
-name: apache2
-state: present
+- name: Running the container
+  docker_container:
+    debug: yes
+    image: httpd:2.4
+    detach: yes
+    tty: yes
+    name: web
+#    volumes: /root/docker_ansible_sandbox:/usr/local/apache2/htdocs/
+    published_ports: 8085:80
+    state: started
+    recreate: yes
+    interactive: yes
+

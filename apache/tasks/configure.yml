@@ -1,0 +1,11 @@
+---
+# Configuring apache2
+- name: apache2 configuration file
+shell: docker cp apache2.conf /etc/apache2/apache2.conf
+notify: restart apache service
+
+- name: create the webpage index.html
+shell: docker cp index.html /var/www/html/index.html
+
+- name: copy the image resource
+shell: docker cp Blue_marble_2015.jpg /var/www/html/Blue_marble_2015.jpg
