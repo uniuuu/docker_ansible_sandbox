@@ -1,0 +1,21 @@
+---
+# Configuring apache2
+- name: debug staff
+  debug: msg="{{playbook_dir}}"
+
+- name: change pwd
+  command: chdir="{{playbook_dir}}" ls -lha
+  register: result
+- debug: var=result
+
+- name: apache2 configuration file
+  become: yes
+  #  become_method: su
+  shell: chdir="{{playbook_dir}}/roles/apache/tasks" docker cp apache2.conf web:/etc/apache2/apache2.conf
+  notify: restart apache service
+
+- name: create the webpage index.html
+  shell: chdir="{{playbook_dir}}" docker cp roles/apache/tasks/index.html web:/var/www/html/index.html
+
+- name: copy the image resource
+  shell: docker cp roles/apache/tasks/Blue_marble_2015.jpg web:/var/www/html/Blue_marble_2015.jpg

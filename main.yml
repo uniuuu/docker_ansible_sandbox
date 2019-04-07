@@ -51,13 +51,21 @@
         state: started
         recreate: yes
 
-    - name: Check if container is running
+    - name: copy nginx.conf
       #      shell: docker ps
       #      shell: docker cp /root/docker_ansible_sandbox/nginx.conf web:/tmp/
       shell: "{{ item }}"
       with_items: 
-        - docker ps
+#        - docker ps
         - docker cp /root/docker_ansible_sandbox/nginx.conf web:/tmp/
+
+          #    - name: Check if container is running
+    - shell: docker ps
+      register: result
+    
+    - debug:
+        var: result
+        #        verbosity: 4
 
     - name: add container to inventory
       add_host:
