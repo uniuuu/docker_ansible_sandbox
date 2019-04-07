@@ -1,0 +1,18 @@
+---
+- name: Start elasticsearch
+  docker_container:
+    debug: yes
+    detach: yes
+    recreate: yes
+    name: elasticsearch
+    #    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.1 
+    ports:
+      - 9200:9200
+      - 9300:9300
+    env:
+      discovery.type=single-node
+    networks:
+      - name: logging
+    volumes:
+      - "{{ paths.elasticsearch }}:/usr/share/elasticsearch/data"

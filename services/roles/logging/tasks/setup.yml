@@ -1,0 +1,50 @@
+---
+- name: Adjust max map count
+  sysctl:
+    name: vm.max_map_count
+    value: 262144
+    state: present
+
+- name: force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers
+
+- name: Setup directories
+  become_user: qubit
+  become_method: su
+  file:
+    path: "{{ item }}"
+    recurse: yes
+  with_items:
+    - "{{ paths.filebeat }}"
+    - "{{ paths.elasticsearch }}"
+
+- name: change_ownership_elasticsearch
+  file:
+    path: "{{ paths.elasticsearch }}"
+    owner: 1000
+    group: root
+    recurse: yes
+    mode: 0777
+
+
+      #- shell: ls -lha "{{ paths.filebeat }}"
+      #  register: result
+
+      #- debug: var=result
+
+- name: debug path
+  debug: msg="{{paths.filebeat}}"
+
+- name: Sync filebeat config
+  #  become_user: qubit
+  become_method: su
+  synchronize:
+    src: files/filebeat.yml
+    dest: "{{ paths.filebeat }}"
+  notify:
+    - change_ownership_filebeat
+    - restart_filebeat
+
+- name: Create network
+  docker_network:
+    name: logging

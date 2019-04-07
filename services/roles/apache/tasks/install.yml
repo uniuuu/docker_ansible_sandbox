@@ -6,7 +6,7 @@
     image: httpd:2.4
     detach: yes
     tty: yes
-    name: web
+    name: web4
 #    volumes: /root/docker_ansible_sandbox:/usr/local/apache2/htdocs/
     published_ports: 8085:80
     state: started

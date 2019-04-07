@@ -1,0 +1,27 @@
+---
+# Configuring apache2
+- name: debug staff
+  debug: msg="{{playbook_dir}}"
+
+  #- name: change pwd
+  #  command: chdir="{{playbook_dir}}" ls -lha
+  #  register: result
+  #- debug: var=result
+
+- name: upload the docker directory to the docker host
+  synchronize: src="{{playbook_dir}}/roles/apache/files" dest=/tmp
+#      become: yes
+  become_method: su
+
+
+  #- name: apache2 configuration file
+  #  become: yes
+  #  become_method: su
+  #  shell: docker cp /tmp/tasks/apache2.conf web4:/usr/local/apache2/conf/httpd.conf
+  # notify: restart apache service
+
+- name: create the webpage index.html
+  shell: chdir="/tmp/files" docker cp index.html web4:/usr/local/apache2/htdocs/
+
+- name: copy the image resource
+  shell: docker cp /tmp/files/Blue_marble_2015.jpg web4:/usr/local/apache2/htdocs/Blue_marble_2015.jpg

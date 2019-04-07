@@ -1,0 +1,11 @@
+---
+- name: Start kibana
+  docker_container:
+    recreate: yes
+    debug: yes
+    name: kibana
+    image: docker.elastic.co/kibana/kibana:6.2.4
+    ports:
+      - 5601:5601
+    networks:
+      - name: logging

@@ -1,0 +1,5 @@
+---
+# tasks file for service-group
+- include_tasks: container1.yml
+- include_tasks: container2.yml
+

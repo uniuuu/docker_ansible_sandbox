@@ -1,0 +1,13 @@
+---
+- name: Start filebeat
+  docker_container:
+    debug: yes
+    recreate: yes
+    name: filebeat
+    #    image: docker.elastic.co/beats/filebeat:6.2.4
+    image: store/elastic/filebeat:6.7.1
+    user: root
+    volumes:
+        - "{{ paths.filebeat }}/filebeat.yml:/usr/share/filebeat/filebeat.yml"
+    networks:
+      - name: logging

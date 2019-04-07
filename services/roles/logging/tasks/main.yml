@@ -1,0 +1,6 @@
+---
+# tasks file for logging
+- include: tasks/setup.yml
+- include: tasks/filebeat.yml
+- include: tasks/elasticsearch.yml
+- include: tasks/kibana.yml

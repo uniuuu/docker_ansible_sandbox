@@ -1,0 +1,8 @@
+---
+# vars file for logging
+base_path: /home/qubit/docker_ansible_sandbox/logging
+paths:
+  filebeat: "{{ base_path }}/filebeat"
+  elasticsearch: "{{ base_path }}/elasticsearch"
+  kibana: "{{ base_path }}/kibana"
+

@@ -1,0 +1,16 @@
+---
+# handlers file for logging
+- name: change_ownership_filebeat
+  file:
+    path: "{{ paths.filebeat }}/filebeat.yml"
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: restart_filebeat
+  command: docker restart filebeat
+
+
+
+
