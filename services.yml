@@ -1,4 +1,5 @@
 ---
 - import_playbook: services/apache.yml
 - import_playbook: services/logging.yml
+- import_playbook: services/organizr.yml
 - import_playbook: services/service-group.yml

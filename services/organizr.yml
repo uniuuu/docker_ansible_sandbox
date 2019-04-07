@@ -1,5 +1,7 @@
 ---
-- hosts: all
+- hosts: webserver
+  remote_user: qubit
+  become: true
   tasks:
     - name: Start organizr
       docker_container:
@@ -7,9 +9,9 @@
         image: lsiocommunity/organizr
         restart_policy: always
         env:
-          PGID: 1000
-          PUID: 1000
+          PGID=1000
+          PUID=1000
         ports:
-          - 8080:80
+          - 8087:80
         volumes:
           - /home/docker/organizr:/config
