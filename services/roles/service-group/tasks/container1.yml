@@ -1,29 +1,4 @@
 ---
-#- hosts: webserver
-#  remote_user: qubit 
-#  become: yes
-  #  become_user: root
-  #  become_method: su
-  #  tasks:
-          #    - name: Install epel-release
-          #      yum: 
-          #         name: epel-release
-          #         state: present
-- name: Install pip
-  yum: 
-     name: python-pip
-     state: present
-
-- name: Install rsync
-  yum: 
-     name: rsync
-     state: present
-
-        
-- name: install docker-py package
-  pip: name=docker-py
-
-
 - name: upload the docker directory to the docker host
   synchronize: src=files/docker dest=/tmp
 #      become: yes
